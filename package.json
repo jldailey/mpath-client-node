@@ -1,0 +1,10 @@
+{
+  "author": "Jesse Dailey <jesse@conductrics.com>",
+  "name": "mpath-client",
+  "description": "Client for mPath Learning API",
+  "version": "0.0.1",
+  "dependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
