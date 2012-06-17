@@ -3,7 +3,10 @@
   "name": "mpath-client",
   "description": "Client for mPath Learning API",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+		"request": "*",
+		"coffee-script": "*"
+	},
   "engines": {
     "node": "*"
   }
