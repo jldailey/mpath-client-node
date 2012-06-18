@@ -1,3 +1,0 @@
-[submodule "lib/common"]
-	path = lib/common
-	url = git@conductrics.unfuddle.com:conductrics/mpath-common.git
