@@ -1,5 +1,13 @@
 request = require("request")
 
+
+defaultHandler = (callback) ->
+	(err, resp, body) ->
+		return callback(err, null) if err
+		try return callback(null, JSON.parse(body))
+		catch err
+			return callback(err, null)
+
 exports.init = (baseUrl) ->
 	getDecisions: (apikey, sessionCode, ownerCode, agentCode, pointCode, callback) ->
 		request(
@@ -8,9 +16,7 @@ exports.init = (baseUrl) ->
 			headers:
 				"x-mpath-apikey": apikey
 				"x-mpath-session": sessionCode
-		, (err, resp, body) ->
-			callback( err, body )
-		)
+		, defaultHandler callback)
 	sendReward: (apikey, sessionCode, ownerCode, agentCode, goalCode, callback) ->
 		request(
 			method: "POST"
@@ -18,9 +24,7 @@ exports.init = (baseUrl) ->
 			headers:
 				"x-mpath-apikey": apikey
 				"x-mpath-session": sessionCode
-		, (err, resp, body) ->
-			callback( err, body )
-		)
+		, defaultHandler callback)
 	expireSession: (apikey, ownerCode, sessionCode, callback) ->
 		request(
 			method: "GET"
@@ -28,42 +32,17 @@ exports.init = (baseUrl) ->
 			headers:
 				"x-mpath-apikey": apikey
 				"x-mpath-session": sessionCode
-		, (err, resp, body) ->
-			callback(err, body)
-		)
-	createAgent: (apikey, ownerCode, agentCode, agentJson="""{
-			"goals":[
-				{"code":"goal-1"}
-			],
-			"points": [
-				{
-					"code":"point-1",
-					"decisions":[
-						{
-							"code":"decision-1",
-							"choices":[ 
-								{"code":"a"},
-								{"code":"b"}
-							]
-						}
-					]
-				}
-			]
-		}"""
-	) ->
+		, defaultHandler callback)
+	createAgent: (apikey, ownerCode, agentCode, agentJson, callback) ->
 		request(
 			method: "PUT"
 			url: [baseUrl, ownerCode, agentCode].join "/"
 			headers:
 				"x-mpath-apikey": apikey
 			json: agentJson
-		, (err, resp, body) ->
-			callback(err, body)
-		)
+		, defaultHandler callback)
 	createApiKey: (email, ownerCode, callback) ->
 		request(
 			method: "PUT"
 			url: [baseUrl,ownerCode,"create-key",email].join "/"
-		, (err, resp, body) ->
-			callback(err, body)
-		)
+		, defaultHandler callback)
