@@ -1,5 +1,5 @@
 request = require("request")
-
+require "../common"
 
 defaultHandler = (callback) ->
 	(err, resp, body) ->
@@ -12,7 +12,9 @@ exports.init = (baseUrl) ->
 	getDecisions: (apikey, sessionCode, ownerCode, agentCode, pointCode, callback) ->
 		request(
 			method: "GET"
-			url: [baseUrl, ownerCode, agentCode, "decision", pointCode].join "/"
+			url: [baseUrl, ownerCode, agentCode, "decision"].join "/"
+			qs:
+				point: pointCode
 			headers:
 				"x-mpath-apikey": apikey
 				"x-mpath-session": sessionCode
@@ -42,6 +44,8 @@ exports.init = (baseUrl) ->
 			json: agentJson
 		, defaultHandler callback)
 	createApiKey: (email, ownerCode, callback) ->
+		if not ownerCode
+			ownerCode = $.random.string(16)
 		request(
 			method: "PUT"
 			url: [baseUrl,ownerCode,"create-key",email].join "/"
