@@ -4,10 +4,11 @@
   "description": "Client for mPath Learning API",
   "version": "0.0.1",
   "dependencies": {
-		"request": "*",
-		"coffee-script": "*"
+		"bling": "latest"
+		"request": "latest",
+		"coffee-script": "latest"
 	},
   "engines": {
-    "node": "*"
+    "node": "latest"
   }
 }

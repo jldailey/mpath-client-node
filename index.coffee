@@ -1,5 +1,5 @@
 request = require("request")
-require "../common"
+require "bling"
 
 defaultHandler = (callback) ->
 	(err, resp, body) ->
