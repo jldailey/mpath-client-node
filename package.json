@@ -3,9 +3,15 @@
   "name": "mpath-client",
   "description": "Client for mPath Learning API",
   "version": "0.0.1",
+  "main": "dist/index.js",
   "dependencies": {
-		"bling": "latest"
-		"request": "latest",
+		"bling": "latest",
+		"request": "latest"
+	},
+	"scripts": {
+		"build": "coffee -o dist -c index.coffee"
+	},
+	"devDependencies": {
 		"coffee-script": "latest"
 	},
   "engines": {
