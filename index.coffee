@@ -43,10 +43,13 @@ exports.init = (baseUrl) ->
 				"x-mpath-apikey": apikey
 			json: agentJson
 		, defaultHandler callback)
-	createApiKey: (email, ownerCode, callback) ->
+	createApiKey: (rootKey, rootOwner, email, ownerCode, callback) ->
 		if not ownerCode
 			ownerCode = $.random.string(16)
 		request(
 			method: "PUT"
 			url: [baseUrl,ownerCode,"create-key",email].join "/"
+			headers:
+				"x-mpath-apikey": rootKey
+				"x-mpath-owner": rootOwner
 		, defaultHandler callback)
