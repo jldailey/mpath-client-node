@@ -64,13 +64,17 @@
           json: agentJson
         }, defaultHandler(callback));
       },
-      createApiKey: function(email, ownerCode, callback) {
+      createApiKey: function(rootKey, rootOwner, email, ownerCode, callback) {
         if (!ownerCode) {
-          ownerCode = $.random.string(16);
+          ownerCode = "owner_" + $.random.string(9);
         }
         return request({
           method: "PUT",
-          url: [baseUrl, ownerCode, "create-key", email].join("/")
+          url: [baseUrl, ownerCode, "create-key", email].join("/"),
+          headers: {
+            "x-mpath-apikey": rootKey,
+            "x-mpath-owner": rootOwner
+          }
         }, defaultHandler(callback));
       }
     };
