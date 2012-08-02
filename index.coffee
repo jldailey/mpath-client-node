@@ -53,3 +53,12 @@ exports.init = (baseUrl) ->
 				"x-mpath-apikey": rootKey
 				"x-mpath-owner": rootOwner
 		, defaultHandler callback)
+	checkLogin: (ownerCode, email, password, callback) ->
+		request(
+			method: "GET"
+			url: [baseUrl,ownerCode,"login"].join "/"
+			headers:
+				"x-mpath-email": email
+				"x-mpath-password": password
+		, defaultHandler callback)
+		
