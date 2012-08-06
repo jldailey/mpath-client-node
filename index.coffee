@@ -1,10 +1,15 @@
-request = require("request")
 require "bling"
+request = require "request"
 
 defaultHandler = (callback) ->
 	(err, resp, body) ->
+		$.log "mpath-client response: #{err} #{body}"
 		return callback(err, null) if err
-		try return callback(null, JSON.parse(body))
+		try
+			obj = JSON.parse(body)
+			return callback obj.err, null if "err" of obj
+			return callback obj.error, null if "error" of obj
+			return callback null, obj
 		catch err
 			return callback(err, null)
 
