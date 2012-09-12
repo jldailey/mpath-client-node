@@ -11,7 +11,7 @@ defaultHandler = (callback) ->
 			return callback obj.error, null if "error" of obj
 			return callback null, obj
 		catch err
-			return callback(err, null)
+			return callback err, null
 
 exports.init = (baseUrl) ->
 	getDecisions: (apikey, sessionCode, ownerCode, agentCode, pointCode, callback) ->
@@ -58,12 +58,11 @@ exports.init = (baseUrl) ->
 				"x-mpath-apikey": rootKey
 				"x-mpath-owner": rootOwner
 		, defaultHandler callback)
-	checkLogin: (ownerCode, email, password, callback) ->
+	checkLogin: (email, password, callback) ->
 		request(
 			method: "GET"
-			url: [baseUrl,ownerCode,"login"].join "/"
+			url: [baseUrl,"login"].join "/"
 			headers:
 				"x-mpath-email": email
 				"x-mpath-password": password
 		, defaultHandler callback)
-		
